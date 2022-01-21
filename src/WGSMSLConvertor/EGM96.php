@@ -92,8 +92,6 @@ class EGM96 {
             throw new \Exception ('Error in egm file - no data loaded');
         }
         
-        //echo 'Loaded: ', $this->offset, " ", $this->scale, ' ', $this->originNorth, ' ', $this->originEast, "\n"; 
-        
         fclose($f);
     }
     
@@ -116,10 +114,15 @@ class EGM96 {
     }
     
     public function altitudeCorrectionAt($lat, $lng) : float {
-        $lngN = (360 + $lng - $this->originEast) % 360;
-        $tgx = $lngN * $this->width / 360;
-        $latN = (($this->originNorth - $lat) + 180) % 180;
-        $tgy = $latN * $this->height / 180;
+        $lngN = 360 + $lng - $this->originEast;
+        if ($lngN > 360) $lngN -= 360;
+        $tgx = $lngN * $this->width / 360.0;
+        
+        $latN = ($this->originNorth - $lat) + 180;
+        if ($latN > 180) $latN -= 180;
+        $tgy = $latN * $this->height / 180.0;
+        
+        // echo $lat, " ", $lng, " ", $lngN, " ", $latN, " ", $tgx, " ", $tgy, "\n";  
         
         // tgx and tgy are now "coordinates" of the data. We keep them as floating point as we proceed with reading surrounding values and doing interpolations
         
@@ -137,6 +140,8 @@ class EGM96 {
                 $region[$x][$y] = $this->data[($intx + $x - 1 + $this->width) % $this->width][($inty + $y - 1 + $this->height) % $this->height];
             }
         }
+        
+        // echo "\n", $fracx, " ", $fracy, " \n";
         
         return $this->offset + self::CubicInterpolate2D($region, $fracx, $fracy) * $this->scale; 
     }

@@ -35,8 +35,8 @@ final class EGMTest extends TestCase {
             $msl = $t[2] - $correction;
             $this->assertIsFloat($correction);
             $this->assertThat($correction, $this->logicalNot($this->equalTo(0)), 'Correction should not be zero!');
-            $this->assertEqualsWithDelta($t[3], $msl, 5, 'Computed vs expected MSL differs too much for coordinates '. $t[0].' '.$t[1]);
-            //echo $t[0], ' ', $t[1], ' WGS ', $t[2], ' Corr ', $correction, ' MSL ', $msl, "\n";
+            $this->assertEqualsWithDelta($t[3], $msl, 1, 'Computed vs expected MSL differs too much for coordinates '. $t[0].' '.$t[1]);
+            // echo $t[0], ' ', $t[1], ' WGS ', $t[2], ' Corr ', $correction, ' MSL ', $msl, ' Diff ', ($t[3] - $msl), "\n";
         }
     }
 }
