@@ -1,0 +1,35 @@
+{
+	"name" : "dimitar-kunchev/wgs-msl-convert",
+	"description" : "Convert between WGS and MSL altitude.",
+	"type" : "library",
+	"keywords" : [
+		"wgs",
+		"msl",
+		"altitude"
+	],
+	"license" : "MIT",
+	"authors" : [{
+			"name" : "Dimitar Kunchev",
+			"email" : "d.kunchev@gmail.com",
+			"role" : "developer"
+		}
+	],
+	"require" : {
+		"php" : ">=7.3"
+	},
+	"require-dev": {
+        "phpunit/phpunit": "^4.8.36|^5.7.27|^6.59|^7.5.11",
+    },
+	"autoload" : {
+		"psr-4" : {
+			"WGSMSLConvertor\\" : "src/WGSMSLConvertor/"
+		}
+	},
+	"autoload-dev": {
+        "psr-4": {
+            "Test\\WGSMSLConvertor":"tests/WGSMSLConvertor/"
+        }
+    },
+	"minimum-stability" : "stable",
+	"prefer-stable" : true
+}
